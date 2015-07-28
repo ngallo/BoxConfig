@@ -13,15 +13,15 @@ installation.
 
 This means I can be up and running with a new Mac by typing:
 
-    git clone 'https://github.com/byrney/Config.git'
-    cd Config/Setup && bash kat.bash
+    git clone 'https://github.com/ngallo/BoxConfig.git'
+    cd Config/Setup && bash dev.bash
 
 There are several 'category scripts' that can be used to set up base
 system, dev tools, image manipulation and so on.
 
 Then there are scripts for controlling which machines get what. For example
-kat.bash and keira.bash set up two of my machines. These are just a list of
-categories to install. kat.bash might look like this
+dev.bash and keira.bash set up two of my machines. These are just a list of
+categories to install. dev.bash might look like this
 
     #!/bin/bash -eu
     bash mbpsetup.sh base.bash utils.bash dev.bash
