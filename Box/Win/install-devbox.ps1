@@ -28,17 +28,18 @@ function CreateDir([string]$targetdir) {
     }
 }
 
-function make-link
-{
-    $link = $args[0];
-    $dest = $args[1];
-    if(test-path "$link") {
-        rm "$link"
-    }
-    cmd /c mklink  "$link" "$dest"
+function CreateLinkWithHotKey {
+    $dest = $args[0];
+    $link = $args[1];
+    $hotkey = $args[2];
+    $objShell = New-Object -ComObject WScript.Shell
+    $lnk = $objShell.CreateShortcut($dest)
+    $lnk.TargetPath = $link
+    $lnk.HotKey = $hotkey
+    $lnk.Save() 
 }
 
-.\install-choc.ps1
+#.\install-choc.ps1
 
 # Chocolatey settings
 Call 'Chocolatey settings' { 
@@ -73,8 +74,9 @@ Call 'vim' {
         Print "vim"
         cinst -y vim
         $gvimbin = "$programfiles\vim\vim74\gvim.exe"
-        $gvimlink = "c:\Users\Public\Desktop\GVim"
-        make-link "$gvimlink" "$gvimbin"
+        $gvimlink = "c:\Users\Public\Desktop\GVim.lnk"
+        $gvimhotkey = "Ctrl+Shift+Alt+V"
+        CreateLinkWithHotKey "$gvimlink" "$gvimbin" "$gvimhotkey"
     }
 
 # git
@@ -88,5 +90,8 @@ Call 'git' {
 Call 'cmder mini' { 
         Print "cmder mini"
         cinst -y cmdermini.portable
-        make-link "c:\Users\Public\Desktop\Cmder" "c:\tools\cmdermini\Cmder.exe"
+        $gvimbin = "c:\tools\cmdermini\Cmder.exe"
+        $gvimlink = "c:\Users\Public\Desktop\Cmder.lnk"
+        $gvimhotkey = "Ctrl+Shift+Alt+C"
+        CreateLinkWithHotKey "$gvimlink" "$gvimbin" "$gvimhotkey"
     }
