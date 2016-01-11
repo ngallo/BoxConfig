@@ -7,7 +7,9 @@ filetype off
 
 " Set rtp based on windows, posix or cygwin  (shellcmdflag for cygwin detection)
 let win_shell = (has('win32') || has('win64')) && &shellcmdflag =~ '/'
-let vimDir = win_shell ? '$HOME/vimfiles' : '$HOME/.vim'
+"uncomment line below if running in mac
+"let vimDir = win_shell ? '$HOME/vimfiles' : '$HOME/.vim'
+let vimDir = win_shell ? '$HOME/vimfiles' : '$HOME/vimfiles'
 let &runtimepath .= ',' . expand(vimDir . '/vundle')
 
 call vundle#begin(expand(vimDir . '/bundle'))
@@ -19,15 +21,20 @@ call vundle#begin(expand(vimDir . '/bundle'))
     Plugin 'vim-scripts/DeleteTrailingWhitespace'
     Plugin 'endwise.vim'
     Plugin 'greplace.vim'
-"    Plugin 'Markdown'
     Plugin 'cakebaker/scss-syntax.vim'
     Plugin 'scrooloose/syntastic'
-    Plugin 'jtratner/vim-flavored-markdown'
     Plugin 'airblade/vim-gitgutter'
-    " no tagbar
-    Plugin 'pangloss/vim-javascript'
     Plugin 'junegunn/vim-easy-align'
     Plugin 'vim-pandoc/vim-pandoc-syntax'
+    Plugin 'buftabs'
+    Plugin 'pangloss/vim-javascript'
+    Plugin 'Windows-PowerShell-indent-enhanced'
+    Plugin 'Windows-PowerShell-File-Type-Plugin'
+    Plugin 'Windows-PowerShell-Indent-File'
+    Plugin 'rdark/Windows-PowerShell-Syntax-Plugin'
+    Plugin 'kongo2002/fsharp-vim'
+    Plugin 'fugitive.vim'
+    Plugin 'gitv'
     " One to try:
     " Plugin 'vim-addon-ruby-debug-ide'
 call vundle#end()            " required
@@ -61,41 +68,37 @@ set wildmode=longest,list,full
 set switchbuf=usetab,newtab                                 " have quickfix commands use tabs
 set ve=block                                                " virtual edit when block select  (^V)
 set diffopt=filler,vertical,context:100                     " virtical split in diff, only fold if 100 lines match
+set lazyredraw                                              " Do not redraw screen during complex operations
+
+"
+" Leader key
+"
+let mapleader = ','
 
 "
 " keyboard shortcuts
 "
-let mapleader = ','
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
-nmap <leader>q :q<CR>
 nmap <leader>w :w<CR>
 nmap <leader>t :CtrlPCurWD<CR>
 nmap <leader>T :CtrlP<CR>
 nmap <leader>] :TagbarToggle<CR>
 nmap <leader><space> :DeleteTrailingWhitespace<CR>
 nmap <leader>g :GitGutterToggle<CR>
-map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
-map <leader>v :tabnew $HOME/.vimrc<CR>
+map  <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimrc reloaded'"<CR>
+map  <leader>v :tabnew $HOME/.vimrc<CR>
 nmap <silent> <leader>z :set spell!<CR>
 vmap <leader>e :call ExtractVariable()<CR>
-map <leader>o :wincmd o<CR>
+map  <leader>o :wincmd o<CR>
 "
 "Easy align
 "
- "interactive align of text object or motion
+"interactive align of text object or motion
 vmap <Enter> <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-"
-" Ctrlp settings
-"
-let g:ctrlp_match_window = 'order:ttb,max:20'
-let g:ctrlp_prompt_mappings = {
-  \ 'AcceptSelection("e")': [],
-  \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
-  \ }
 
 "
 " Gitgutter settings
@@ -127,12 +130,13 @@ com! -nargs=1 RvGrep call s:RVimGrep(<f-args>)
 "
 " filetypes
 "
-autocmd BufRead,BufNewFile *.fdoc set filetype=yaml                " fdoc is yaml
-autocmd BufRead,BufNewFile *.build set filetype=xml                " msbuild is xml
-autocmd BufRead,BufNewFile *.plist set filetype=xml                " plist is xml
-autocmd BufRead,BufNewFile *.build set filetype=xml                " msbuild is xml
-autocmd BufRead,BufNewFile *.targets set filetype=xml              " msbuild is xml
-autocmd VimResized * :wincmd =                                     " automatically rebalance windows on vim resize
+autocmd BufRead,BufNewFile *.fdoc    set filetype=yaml              " fdoc is yaml
+autocmd BufRead,BufNewFile *.build   set filetype=xml               " msbuild is xml
+autocmd BufRead,BufNewFile *.plist   set filetype=xml               " plist is xml
+autocmd BufRead,BufNewFile *.build   set filetype=xml               " msbuild is xml
+autocmd BufRead,BufNewFile *.targets set filetype=xml               " msbuild is xml
+autocmd BufRead,BufNewFile *.ejs     set filetype=html              " html templates
+autocmd VimResized * :wincmd =                                      " automatically rebalance windows on vim resize
 
 "
 " Markdown / pandoc
@@ -148,12 +152,8 @@ let g:pandoc#syntax#conceal#use = 0
 " gui settings
 "
 if (&t_Co == 256 || has('gui_running'))
-  if ($TERM_PROGRAM == 'iTerm.app')
-    colorscheme solarized
-  else
     colorscheme desert
     highlight Signcolumn guibg=DarkBlue
-  endif
 endif
 
 "
@@ -199,12 +199,11 @@ function! ExtractVariable() range
 endfunction
 
 function! TerminalTabHere()
-	exe "silent !ttab " . expand("%:p") . ""
+	exe "silent !ttab " . expand("%:p") . "
+"
 	exe "redraw!"
 endfunction
 com! Ttab call TerminalTabHere()
-
-
 
 " Show syntax highlighting groups for word under cursor
 nmap <leader>z :call <SID>SynStack()<CR>
@@ -215,7 +214,6 @@ function! <SID>SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-
 
 " Source local cutomizations
 if filereadable(expand("~/.vimrc.local"))
@@ -260,9 +258,52 @@ function! s:RunToScratch(cmd, query, include_input)
     exe "wincmd p"
 endfunction
 
+"
 " dbext
+"
 let g:dbext_default_profile_usual ='type=PGSQL:user=:passwd=:host=localhost:dbname=delta:extra=-P footer=off'
 let g:dbext_default_PGSQL_extra   = '-P footer=off --set ON_ERROR_STOP=1'
 let g:dbext_default_PGSQL_pgpass             = expand('$HOME/.pgpass')
 let g:dbext_default_profile = 'usual'
+
+
+"
+" buftabs
+"
+if (has('gui_running'))  " use tabs
+    "
+    " Ctrlp settings
+    "
+    let g:ctrlp_match_window = 'order:ttb,max:20'
+    let g:ctrlp_prompt_mappings = {
+      \ 'AcceptSelection("e")': [],
+      \ 'AcceptSelection("t")': ['<cr>', '<c-m>'],
+      \ }
+    "nmap <A-n> :tabnew<CR>
+    nmap <leader>q :q<CR>
+    nmap <leader>Q :q!<CR>
+else " use buffers
+    set hidden
+    "let g:buftabs_in_statusline=1
+    let g:buftabs_active_highlight_group="DiffChange"
+    let g:buftabs_inactive_highlight_group="Special"
+    let g:buftabs_only_basename=1
+    let g:ctrlp_prompt_mappings = {
+      \ 'AcceptSelection("e")': ['<cr>'],
+      \ 'AcceptSelection("t")': ['<c-m>'],
+      \ }
+    nmap <A-{> :bufprev<CR>
+    nmap <A-}> :bufnext<CR>
+    nmap <leader>q :bdelete<CR>
+    nmap <leader>Q :bdelete!<CR>
+endif
+
+" set statusline=
+" set statusline+=%-20.60{buftabs#statusline()}
+" set statusline+=%#StatusLine#
+" set statusline+=%=
+" set statusline+=%#StatusLine#
+" set statusline+=%-5.5{&ff}
+" set statusline+=[%c,%l/%L]
+
 

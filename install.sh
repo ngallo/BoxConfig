@@ -22,50 +22,50 @@ os=$( uname )
 
 function usage()
 {
-	cat <<-END
+    cat <<END
 
-	Usage:     $0 -nv -s source_dir -d dest_dir -m hostname -o os configfile
+    Usage:     $0 -nv -s source_dir -d dest_dir -m hostname -o os configfile
 
-	           -n     dry run, don't make any changes
-	           -s     source dirrectory. Defaults to $thisdir
-	           -d     destination directory. Defaults to $HOME
-	           -c     copy files instead of linking
-	           -v     verbose output
-	           -m     override machine hostname (defaults to $host)
-	           -o     override operating system (defaults to $os)
-	           -h     display this message
+               -n     dry run, don't make any changes
+               -s     source dirrectory. Defaults to $thisdir
+               -d     destination directory. Defaults to $HOME
+               -c     copy files instead of linking
+               -v     verbose output
+               -m     override machine hostname (defaults to $host)
+               -o     override operating system (defaults to $os)
+               -h     display this message
 
-	       configfile is a colon seperated list of destination:source:host_pattern:os_pattern
+           configfile is a colon seperated list of destination:source:host_pattern:os_pattern
 
-	         .bashrc:my_bashrc.bash:satur.*:Linux|Darwin
+             .bashrc:my_bashrc.bash:satur.*:Linux|Darwin
 
-	       will link/copy source_dir/my_bashrc.bash to dest_dir/.bashrc if the hostname
-	       begins with satur (saturday, saturn etc..) and uname is either Darwin or Linux.
-	       Patterns are passed to grep -E  an empty pattern will match any host/platform
+           will link/copy source_dir/my_bashrc.bash to dest_dir/.bashrc if the hostname
+           begins with satur (saturday, saturn etc..) and uname is either Darwin or Linux.
+           Patterns are passed to grep -E  an empty pattern will match any host/platform
 
-	END
+END
 }
 
 function process_args()
 {
-	while getopts ":s:d:o:m:nvhc" flag ; do
-		case $flag in
-		s) srcdir=${OPTARG%/} ;;
-		d) destdir=${OPTARG%/} ;;
-		n) dryRun=1 ;;
-		c) copyMode='copy' ;;
-		v) verbose=1 ;;
-		o) os=${OPTARG} ;;
-		m) host=${OPTARG} ;;
-		h) usage ; exit 1 ;;
-		:) echo "ERROR: missing argument to flag [-$OPTARG]" ; usage ; exit 5 ;;
-		\?) echo "ERROR: Invalid Option [-$OPTARG]" ; usage ; exit 5 ;;
-		esac
-	done
+    while getopts ":s:d:o:m:nvhc" flag ; do
+        case $flag in
+        s) srcdir=${OPTARG%/} ;;
+        d) destdir=${OPTARG%/} ;;
+        n) dryRun=1 ;;
+        c) copyMode='copy' ;;
+        v) verbose=1 ;;
+        o) os=${OPTARG} ;;
+        m) host=${OPTARG} ;;
+        h) usage ; exit 1 ;;
+        :) echo "ERROR: missing argument to flag [-$OPTARG]" ; usage ; exit 5 ;;
+        \?) echo "ERROR: Invalid Option [-$OPTARG]" ; usage ; exit 5 ;;
+        esac
+    done
 
-	shift $((OPTIND-1))
-	[[ -z ${1:-} ]] && { echo "ERROR: missing config file" ; usage ; exit 5 ; }
-	config="$1"
+    shift $((OPTIND-1))
+    [[ -z ${1:-} ]] && { echo "ERROR: missing config file" ; usage ; exit 5 ; }
+    config="$1"
 }
 
 function linker()
@@ -118,58 +118,59 @@ function remove()
 
 function log()
 {
-	if [[ $verbose ]] ; then
-		 echo "$*"
-	fi
+    if [[ $verbose ]] ; then
+         echo "$*"
+    fi
 }
 
 function createdir()
 {
-	# dont print anything during dryrun or we get repeated messages about the same dir
-	if [[ ! -d "$@" ]] ; then
-		[[ $dryRun ]] || { log "CREATE: $@" ; mkdir -p "$@" ; }
-	fi
+    # dont print anything during dryrun or we get repeated messages about the same dir
+    if [[ ! -d "$@" ]] ; then
+        [[ $dryRun ]] || { log "CREATE: $@" ; mkdir -p "$@" ; }
+    fi
 }
 
 function main() {
-	log "destdir:     $destdir"
-	log "srcdir:      $srcdir"
-	log "config:      $config"
-	log "dryRun:      $dryRun"
-	log "link:        $copyMode"
-	log "os:          $os "
-	log "host:        $host"
+    log "destdir:     $destdir"
+    log "srcdir:      $srcdir"
+    log "config:      $config"
+    log "dryRun:      $dryRun"
+    log "link:        $copyMode"
+    log "os:          $os "
+    log "host:        $host"
 
-	[[ -r "$config" ]]  || { echo "ERROR: cannot read config: $config"    ; exit 6 ; }
-	[[ -d "$srcdir" ]]  || { echo "ERROR: source dir not a dir?: $srcdir" ; exit 7 ; }
-	[[ -d "$destdir" ]] || { echo "ERROR: dest dir not a dir?: $destdir"  ; exit 7 ; }
+    [[ -r "$config" ]]  || { echo "ERROR: cannot read config: $config"    ; exit 6 ; }
+    [[ -d "$srcdir" ]]  || { echo "ERROR: source dir not a dir?: $srcdir" ; exit 7 ; }
+    [[ -d "$destdir" ]] || { echo "ERROR: dest dir not a dir?: $destdir"  ; exit 7 ; }
 
-	IFS=':'
-	grep -v '^#' "$config" | while read dest src hostpattern ospattern; do
-		[[ $dryRun ]] || log "========================"
-		[[ ! -z "$src" && ! -z "$dest" ]] || continue
-		echo "$host" | grep -qE "$hostpattern" || { log "SKIP: $src -> $dest no match for $host =~ $hostpattern"   ; continue; }
-		echo "$os" | grep -qE "$ospattern"     || { log "SKIP: $src -> $dest no match for $os =~ $ospattern"       ; continue; }
-		local srcfile="$srcdir/$src"
+    IFS=':'
+    grep -v '^#' "$config" | while read dest src hostpattern ospattern; do
+        [[ $dryRun ]] || log "========================"
+        [[ ! -z "$src" && ! -z "$dest" ]] || continue
+        echo "$host" | grep -qE "$hostpattern" || { log "SKIP: $src -> $dest no match for $host =~ $hostpattern"   ; continue; }
+        echo "$os" | grep -qE "$ospattern"     || { log "SKIP: $src -> $dest no match for $os =~ $ospattern"       ; continue; }
+        local srcfile="$srcdir/$src"
         if [[ "$dest" = /* ]] ; then
             local destfile="$dest"
         else
             local destfile="$destdir/$dest"
         fi
-		[[ -r "$srcfile" ]] || { echo "ERROR: $src -> $dest sourcefile $srcfile is not readable" ; continue ; }
-		if [[ -e "$destfile" || -L "$destfile" ]] ; then
-			if [[ "$srcfile" -ef "$destfile" ]] ; then
-				log "SKIP: $src -> $dest dest $destfile is already linked to sourcefile: $srcfile"
-				continue
-			fi
-		else
-			local dir="${destfile%/*}"
-			createdir "$dir"
-		fi
+        [[ -r "$srcfile" ]] || { echo "ERROR: $src -> $dest sourcefile $srcfile is not readable" ; continue ; }
+        if [[ -e "$destfile" || -L "$destfile" ]] ; then
+            if [[ "$srcfile" -ef "$destfile" ]] ; then
+                log "SKIP: $src -> $dest dest $destfile is already linked to sourcefile: $srcfile"
+                continue
+            fi
+        else
+            local dir="${destfile%/*}"
+            createdir "$dir"
+        fi
         [[ $verbose ]] && { echo diff "$srcfile" "$destfile" ; diff "$destfile" "$srcfile" || true ; }
-		linker "$srcfile" "$destfile"
-	done
+        linker "$srcfile" "$destfile"
+    done
 }
 
 process_args "$@"
 main "$@"
+
