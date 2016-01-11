@@ -86,7 +86,7 @@ happen
 
      bash install.sh -nv install.cfg
 
-**NOTE:** *In order to install Vundle plugin you need to open gVIM and execute :VundleInstall*
+> **NOTE:** *In order to install Vundle plugin you need to open gVIM and execute :VundleInstall*
 
 remove the 'n' to really run it.  Any files that get clobbered will be moved
 to $HOME/backups-yyyymmdd. In the default mode (link) you should be able to
