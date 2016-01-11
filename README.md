@@ -14,7 +14,7 @@ installation.
 This means I can be up and running with a new Mac by typing:
 
     git clone 'https://github.com/ngallo/BoxConfig.git'
-    cd Config/Setup && bash dev.bash
+    cd Box/OSX && bash dev.bash
 
 There are several 'category scripts' that can be used to set up base
 system, dev tools, image manipulation and so on.
@@ -43,9 +43,6 @@ script to install image tools would look like this:
     inst_brew imagemagick
     inst_brew exiftool
     inst_cask picasa
-
-
-
 
 ## User Configuration ##
 

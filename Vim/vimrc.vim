@@ -1,4 +1,3 @@
-
 "
 " Set up vundle
 "
@@ -6,10 +5,8 @@ set nocompatible
 filetype off
 
 " Set rtp based on windows, posix or cygwin  (shellcmdflag for cygwin detection)
-let win_shell = (has('win32') || has('win64')) && &shellcmdflag =~ '/'
-"uncomment line below if running in mac
-"let vimDir = win_shell ? '$HOME/vimfiles' : '$HOME/.vim'
-let vimDir = win_shell ? '$HOME/vimfiles' : '$HOME/vimfiles'
+let win_shell = (has('win32') || has('win64') || has('win32unix'))
+let vimDir = win_shell ? '$HOME/vimfiles' : '$HOME/.vim'
 let &runtimepath .= ',' . expand(vimDir . '/vundle')
 
 call vundle#begin(expand(vimDir . '/bundle'))
