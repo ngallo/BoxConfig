@@ -110,6 +110,8 @@ Ctrl-w K        : Move buffer down one window
 :set ignorecase
 :set smartcase
 :set incsearch
+:set directory
+:set rtp
 
 ##Others
 :nohl           : Undo highlight
