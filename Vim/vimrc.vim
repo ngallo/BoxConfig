@@ -32,6 +32,7 @@ call vundle#begin(expand(vimDir . '/bundle'))
     Plugin 'kongo2002/fsharp-vim'
     Plugin 'fugitive.vim'
     Plugin 'gitv'
+    Plugin 'diepm/vim-rest-console'
     " One to try:
     " Plugin 'vim-addon-ruby-debug-ide'
 call vundle#end()            " required
