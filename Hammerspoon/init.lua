@@ -134,7 +134,11 @@ local modalKey = setupModal();
 
 binder('e', hyper, modalKey, focus('Mail'));
 binder('t', hyper, modalKey, focus('terminal'));
-binder('v', nil,   modalKey, focus('MacVim'));
+binder('v', hyper, modalKey, focus('MacVim'));
+binder('w', hyper, modalKey, focus('Wunderlist'));
+binder('s', hyper, modalKey, focus('Simplenote'));
+binder('c', hyper, modalKey, focus('Pocket'));
+binder('g', hyper, modalKey, focus('Telegram'));
 binder('b', hyper, modalKey, focus('Google Chrome'));
 binder('[', hyper, modalKey, moveGrid(grid.leftHalf));
 binder(']', hyper, modalKey, moveGrid(grid.rightHalf));
@@ -214,4 +218,3 @@ end
 --         hs.alert.show("No active window")
 --     end
 -- end
-
