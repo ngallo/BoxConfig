@@ -8,17 +8,18 @@ local appFinder = require "hs.appFinder";
 local logger = require "hs.logger";
 local console = logger.new('init', 'debug');
 
-grid.GRIDWIDTH=2
-grid.GRIDHEIGHT=2
-grid.MARGINX = 0
-grid.MARGINY = 0
+grid.GRIDWIDTH  = 4
+grid.GRIDHEIGHT = 2
+grid.MARGINX    = 0
+grid.MARGINY    = 0
 grid.fullScreen  = {x=0, y=0, w=grid.GRIDWIDTH, h=grid.GRIDHEIGHT};
-grid.leftHalf    = {x=0, y=0, h=2, w=1};
-grid.rightHalf   = {x=1, y=0, h=2, w=1};
-grid.topRight    = {x=1, y=0, h=1, w=1};
-grid.bottomRight = {x=1, y=1, h=1, w=1};
-grid.bottomLeft  = {x=0, y=1, h=1, w=1};
-grid.topLeft     = {x=0, y=0, h=1, w=1};
+grid.leftHalf    = {x=0, y=0, h=2, w=2};
+grid.rightHalf   = {x=2, y=0, h=2, w=2};
+grid.topRight    = {x=2, y=0, h=1, w=2};
+grid.bottomRight = {x=2, y=1, h=1, w=2};
+grid.bottomLeft  = {x=0, y=1, h=1, w=2};
+grid.topLeft     = {x=0, y=0, h=1, w=2};
+grid.center      = {x=1, y=0, h=2, w=2};
 hs.window.animationDuration = 0
 local gridcache = {};
 
@@ -134,6 +135,7 @@ local modalKey = setupModal();
 
 binder('e', hyper, modalKey, focus('Mail'));
 binder('t', hyper, modalKey, focus('terminal'));
+binder('v', nil,   modalKey, focus('MacVim'));
 binder('v', hyper, modalKey, focus('MacVim'));
 binder('w', hyper, modalKey, focus('Wunderlist'));
 binder('s', hyper, modalKey, focus('Simplenote'));
@@ -147,6 +149,7 @@ binder('p', hyper, modalKey, moveGrid(grid.topRight));
 binder('l', hyper, modalKey, moveGrid(grid.bottomRight));
 binder('o', hyper, modalKey, moveGrid(grid.topLeft));
 binder('k', hyper, modalKey, moveGrid(grid.bottomLeft));
+binder('g', hyper, modalKey, moveGrid(grid.center));
 binder("m", hyper, modalKey, toggleAltScreen);
 binder('h', hyper, modalKey, hs.hints.windowHints);
 binder('left', hyper, modalKey, moveScreen("left"));
@@ -218,3 +221,4 @@ end
 --         hs.alert.show("No active window")
 --     end
 -- end
+
