@@ -135,7 +135,6 @@ local modalKey = setupModal();
 
 binder('e', hyper, modalKey, focus('Mail'));
 binder('t', hyper, modalKey, focus('terminal'));
-binder('v', nil,   modalKey, focus('MacVim'));
 binder('v', hyper, modalKey, focus('MacVim'));
 binder('w', hyper, modalKey, focus('Wunderlist'));
 binder('s', hyper, modalKey, focus('Simplenote'));
