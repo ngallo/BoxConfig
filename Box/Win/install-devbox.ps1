@@ -73,7 +73,7 @@ Call 'webpicmd' {
 Call 'vim' { 
         Print "vim"
         cinst -y vim
-        $gvimbin = "$programfiles\vim\vim74\gvim.exe"
+        $gvimbin = "$programfiles\vim\vim80\gvim.exe"
         $gvimlink = "c:\Users\Public\Desktop\GVim.lnk"
         $gvimhotkey = "Ctrl+Shift+Alt+V"
         CreateLinkWithHotKey "$gvimlink" "$gvimbin" "$gvimhotkey"
