@@ -1,32 +1,12 @@
-autoload -Uz vcs_info
-
-zstyle ':vcs_info:*' stagedstr '%F{green}●'
-zstyle ':vcs_info:*' unstagedstr '%F{yellow}●'
-zstyle ':vcs_info:*' check-for-changes true
-zstyle ':vcs_info:(sv
-nk]|bzr):*' branchformat '%b%F{1}:%F{11}%r'
-zstyle ':vcs_info:*' enable git svn
-theme_precmd () {
-    if [[ -z $(git ls-files --other --exclude-standard 2> /dev/null) ]] {
-        zstyle ':vcs_info:*' formats ' [%b%c%u%B%F{green}]'
-    } else {
-        zstyle ':vcs_info:*' formats ' [%b%c%u%B%F{red}●%F{green}]'
-    }
-
-    vcs_info
+#
+# ~/.bash_profile: executed by bash for login shells.
+#
+parse_git_branch() {
+    git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
 }
+export PS1="\u@\h \w\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
 
-setopt prompt_subst
-PROMPT='%{$terminfo[bold]$fg[blue]%}#%{$reset_color%} \
-%(#,%{$bg[yellow]%}%{$fg[black]%}%n%{$reset_color%},%{$fg[cyan]%}%n) \
-%{$fg[white]%}@ \
-%{$fg[green]%}%m \
-%{$fg[white]%}in \
-%{$terminfo[bold]$fg[yellow]%}%~%{$reset_color%}\
-%F{green}${vcs_info_msg_0_}%B%F{magenta} %{$reset_color%}%\
- \
-%{$fg[white]%}[%*] $exit_code
-%{$terminfo[bold]$fg[red]%}❯ %{$reset_color%}'
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
+eval $(/usr/libexec/path_helper -s)
 
-autoload -U add-zsh-hook
-add-zsh-hook precmd  theme_precmd
+bind '"\e3":"#"'
