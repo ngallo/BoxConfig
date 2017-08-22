@@ -1,3 +1,0 @@
-inst_brew postgresql
-inst_brew nginx
-inst_cask launchrocket

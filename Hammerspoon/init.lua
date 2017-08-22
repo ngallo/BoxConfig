@@ -220,4 +220,3 @@ end
 --         hs.alert.show("No active window")
 --     end
 -- end
-

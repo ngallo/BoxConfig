@@ -173,4 +173,3 @@ function main() {
 
 process_args "$@"
 main "$@"
-
