@@ -23,19 +23,13 @@
 	lgfHv = log --abbrev-commit --decorate --format=format:'%C(bold blue)%H%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
         showfiles = "!f() { git show --pretty="" --name-status $1; }; f"
 [core]
-	excludesfile = /Users/nicolagallo/.gitignore_global
+	excludesfile = /Users/ngallo/.gitignore_global
 [merge]
     tool = kdiff3
 [mergetool "kdiff3"]
-    path = /usr/local/bin/kdiff3
+    path = C:\\Program Files\\KDiff3\\kdiff3.exe
     trustExitCode = false
 [diff]
     tool = default-difftool
 [difftool "default-difftool"]
     cmd = code --wait --diff $LOCAL $REMOTE
-[difftool "sourcetree"]
-	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
-	path = 
-[mergetool "sourcetree"]
-	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
-	trustExitCode = true
