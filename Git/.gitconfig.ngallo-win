@@ -1,0 +1,35 @@
+[user]
+	name = Nicola Gallo
+	email = ngallo@codearchitects.com
+[credential]
+	helper = store
+[push]
+	default = current
+[diff]
+    tool = gvimdiff
+    renames = copies
+    mnemonicprefix = true
+	guitool = kdiff3
+[color "sh"]
+    branch = auto
+[alias]
+	lg  = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(green)- %an%C(reset)%C(auto)%d%C(reset)' --all
+	lgf  = log --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(green)- %an%C(reset)%C(auto)%d%C(reset)' --all
+	lgH  = log --graph --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%H%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(green)- %an%C(reset)%C(auto)%d%C(reset)' --all
+	lgfH  = log --abbrev-commit --decorate --date=relative --format=format:'%C(bold blue)%H%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%s%C(reset) %C(green)- %an%C(reset)%C(auto)%d%C(reset)' --all
+	lgv = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lgfv = log --abbrev-commit --decorate --format=format:'%C(bold blue)%h%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lgHv = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%H%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+	lgfHv = log --abbrev-commit --decorate --format=format:'%C(bold blue)%H%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
+        showfiles = "!f() { git show --pretty="" --name-status $1; }; f"
+[core]
+	excludesfile = /Users/ngallo/.gitignore_global
+[merge]
+    tool = kdiff3
+[mergetool "kdiff3"]
+    path = C:\\Program Files\\KDiff3\\kdiff3.exe
+    trustExitCode = false
+[diff]
+    tool = default-difftool
+[difftool "default-difftool"]
+    cmd = code --wait --diff $LOCAL $REMOTE
