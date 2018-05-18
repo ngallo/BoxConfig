@@ -303,5 +303,3 @@ endif
 " set statusline+=%#StatusLine#
 " set statusline+=%-5.5{&ff}
 " set statusline+=[%c,%l/%L]
-
-
