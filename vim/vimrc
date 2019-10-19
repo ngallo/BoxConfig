@@ -1,4 +1,11 @@
+
+" Always display the status line, even if only one window is displayed
 set laststatus=2
+" Display line numbers on the left
+set number
+" Use visual bell instead of beeping when doing something wrong
+set visualbell
+
 call plug#begin('~/.vim/bundle')
     Plug 'airblade/vim-gitgutter'
     Plug 'editorconfig/editorconfig-vim'
@@ -14,6 +21,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'scrooloose/nerdcommenter'
     Plug 'airblade/vim-gitgutter'
 call plug#end()
+
 map ; :Files<CR>
 map <C-o> :NERDTreeToggle<CR>
 nmap ]c <Plug>GitGutterNextHunk
