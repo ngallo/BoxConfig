@@ -5,6 +5,7 @@ call plug#begin('~/.vim/bundle')
     Plug 'itchyny/lightline.vim'
     Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
     Plug 'w0rp/ale'
+    Plug 'terryma/vim-multiple-cursors'
 call plug#end()
 map ; :Files<CR>
 map <C-o> :NERDTreeToggle<CR>
