@@ -9,7 +9,7 @@
     tool = gvimdiff
     renames = copies
     mnemonicprefix = true
-	guitool = kdiff3
+	guitool = code
 [color "sh"]
     branch = auto
 [alias]
@@ -25,11 +25,10 @@
 [core]
 	excludesfile = /Users/ngallo/.gitignore_global
 [merge]
-    tool = kdiff3
-[mergetool "kdiff3"]
-    path = C:\\Program Files\\KDiff3\\kdiff3.exe
-    trustExitCode = false
+	tool = vscode
+[mergetool "vscode"]
+	cmd = code --wait $MERGED
 [diff]
-    tool = default-difftool
-[difftool "default-difftool"]
-    cmd = code --wait --diff $LOCAL $REMOTE
+	tool = vscode
+[difftool "vscode"]
+	cmd = code --wait --diff
