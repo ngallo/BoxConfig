@@ -93,3 +93,5 @@ to $HOME/backups-yyyymmdd. In the default mode (link) you should be able to
 run it again and nothing will be touched.  In copy mode, the files will keep
 geting backed up
 
+## ZSH
+https://github.com/ohmyzsh/ohmyzsh
