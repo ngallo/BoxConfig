@@ -9,4 +9,4 @@ function git_branch() {
 }
 
 setopt prompt_subst             # allow command substitution inside the prompt
-PROMPT=$'\e[0;33m$USER \e[0m%~$(git_branch)>'
+PROMPT=$'\e[0;33m$USER\e[0m%~$(git_branch)>'
