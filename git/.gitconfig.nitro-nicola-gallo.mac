@@ -36,3 +36,5 @@
 [difftool "vscode"]
     cmd = code --wait --diff $LOCAL $REMOTE
 # Comment: End of "Extra Block"
+[mergetool]
+	keepBackup = false
