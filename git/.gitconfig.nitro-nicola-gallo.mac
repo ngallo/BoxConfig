@@ -1,6 +1,6 @@
 [user]
 	name = Nicola Gallo
-	email = nicolagmt@hotmail.com
+	email = nicola.gallo@nitroagility.com
 [credential]
 	helper = store
 [push]
@@ -22,13 +22,17 @@
 	lgHv = log --graph --abbrev-commit --decorate --format=format:'%C(bold blue)%H%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
 	lgfHv = log --abbrev-commit --decorate --format=format:'%C(bold blue)%H%C(reset) - %C(bold cyan)%aD%C(reset) %C(bold green)(%ar)%C(reset)%C(auto)%d%C(reset)%n''          %C(white)%s%C(reset) %C(dim white)- %an%C(reset)' --all
         showfiles = "!f() { git show --pretty="" --name-status $1; }; f"
+# Comment: You just added this via 'git config --global core.editor "code --wait"'
 [core]
-	excludesfile = /Users/ngallo/.gitignore_global
+    editor = code --wait
+# Comment: Start of "Extra Block"
+# Comment: This is to unlock Visual Studio Code as your Git diff and Git merge tool
 [merge]
-	tool = vscode
+    tool = vscode
 [mergetool "vscode"]
-	cmd = code --wait $MERGED
+    cmd = code --wait $MERGED
 [diff]
-	tool = vscode
+    tool = vscode
 [difftool "vscode"]
-	cmd = code --wait --diff
+    cmd = code --wait --diff $LOCAL $REMOTE
+# Comment: End of "Extra Block"
