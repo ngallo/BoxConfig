@@ -84,7 +84,7 @@ for the help
 Edit the config file (install.cfg) or create a new one. Then see what will
 happen
 
-     bash install.sh -nv nicolagmt-mac.cfg
+     bash install.sh -nv box-lnx.cfg
 
 > **NOTE:** *In order to install plugins you need to open gVIM and execute :PlugInstall*
 
