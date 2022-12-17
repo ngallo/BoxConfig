@@ -29,6 +29,7 @@
 # Comment: This is to unlock Visual Studio Code as your Git diff and Git merge tool
 [merge]
     tool = vscode
+	ff = --no-ff
 [mergetool "vscode"]
     cmd = code --wait $MERGED
 [diff]
@@ -38,3 +39,5 @@
 # Comment: End of "Extra Block"
 [mergetool]
 	keepBackup = false
+[pull]
+	ff = false
